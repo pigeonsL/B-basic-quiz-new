@@ -17,6 +17,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserInfo(@RequestParam String name, @RequestParam String passwd){
+
         return userService.getAllUsers();
     }
 
