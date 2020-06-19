@@ -1,6 +1,8 @@
 package com.thoughtworks.capacity.gtb.mvc;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,18 +22,18 @@ public class UserService {
         userMap.put(user.getId(), user);
     }
 
-    public String login(String name, String passwd){
+    public User login(String name, String passwd){
         if(!IsValidName(name)){
-            return "用户名不合法";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "用户名不合法");
         }
         if(IsValidPasswd(passwd)){
             for(User user: userMap.values()){
                 if(user.getName().equals(name) && user.getPasswd().equals(passwd)){
-                    return user.toString();
+                    return user;
                 }
             }
         }
-        return "用户名或密码错误";
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "用户名或密码错误");
     }
     public boolean IsValidName(String name){
         if(name.length() >= 5 && name.length() <= 10){

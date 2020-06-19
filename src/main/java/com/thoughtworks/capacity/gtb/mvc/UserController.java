@@ -12,7 +12,7 @@ public class UserController {
     }
     //GET 登录
     @GetMapping("/login")
-    public String login( String name, String passwd){
+    public User login( String name, String passwd){
         return userService.login(name, passwd);
     }
 
