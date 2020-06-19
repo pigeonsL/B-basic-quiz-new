@@ -19,7 +19,7 @@ public class UserService {
     public List<User> getAllUsers() {
         return new ArrayList<>(userMap.values());
     }
-    public void registerUser(User user) {
+    public void addUser(User user) {
         userMap.put(user.getId(), user);
     }
     public User getUserById(Integer id) {
