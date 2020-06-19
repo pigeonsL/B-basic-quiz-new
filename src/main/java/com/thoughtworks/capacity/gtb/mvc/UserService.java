@@ -24,7 +24,7 @@ public class UserService {
 
     public User login(String name, String passwd){
         if(!IsValidName(name)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "用户名不合法");
+            throw new UserNotFoundException("用户名不合法");
         }
         if(IsValidPasswd(passwd)){
             for(User user: userMap.values()){
