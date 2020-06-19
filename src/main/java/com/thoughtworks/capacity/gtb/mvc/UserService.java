@@ -2,9 +2,7 @@ package com.thoughtworks.capacity.gtb.mvc;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,21 +16,17 @@ public class UserService {
         userMap.put(2, new User(2, "username2", "username_2", "username2@mail.com"));
     }
 
-    public List<User> getAllUsers() {
-        return new ArrayList<>(userMap.values());
-    }
-
     public void addUser(User user) {
         userMap.put(user.getId(), user);
     }
 
     public String login(String name, String passwd){
-        if(IsValidName(name)){
+        if(!IsValidName(name)){
             return "用户名不合法";
         }
         if(IsValidPasswd(passwd)){
             for(User user: userMap.values()){
-                if(user.getName() == name && user.getPasswd() == passwd){
+                if(user.getName().equals(name) && user.getPasswd().equals(passwd)){
                     return user.toString();
                 }
             }

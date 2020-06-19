@@ -1,12 +1,9 @@
 package com.thoughtworks.capacity.gtb.mvc;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
+@RestController
 public class UserController {
     private final UserService userService;
 
@@ -14,16 +11,13 @@ public class UserController {
         this.userService = userService;
     }
     //GET 登录
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    @ResponseBody
-    public List<User> getUserInfo(@RequestParam String name, @RequestParam String passwd){
-
-        return userService.getAllUsers();
+    @GetMapping("/login")
+    public String login( String name, String passwd){
+        return userService.login(name, passwd);
     }
 
     //POST register
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void registerUser(@RequestBody User user){
         userService.addUser(user);
