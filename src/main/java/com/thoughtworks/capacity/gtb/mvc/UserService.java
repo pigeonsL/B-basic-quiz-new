@@ -1,8 +1,7 @@
 package com.thoughtworks.capacity.gtb.mvc;
 
-import org.springframework.http.HttpStatus;
+import com.thoughtworks.capacity.gtb.mvc.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,11 +17,17 @@ public class UserService {
         userMap.put(2, new User(2, "username2", "username_2", "username2@mail.com"));
     }
 
-    public void addUser(User user) {
+    public void addUser(User user) throws UserNotFoundException {
+        if(!IsValidName(user.getName()))
+            throw new UserNotFoundException("用户名不合法");
+        if(!IsValidPasswd(user.getPasswd()))
+            throw new UserNotFoundException("密码不合法");
+        int count = userMap.size() + 1;
+        user.setId(count);
         userMap.put(user.getId(), user);
     }
 
-    public User login(String name, String passwd){
+    public User login(String name, String passwd) throws UserNotFoundException {
         if(!IsValidName(name)){
             throw new UserNotFoundException("用户名不合法");
         }
@@ -33,7 +38,7 @@ public class UserService {
                 }
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "用户名或密码错误");
+        throw new UserNotFoundException("用户名或密码错误");
     }
     public boolean IsValidName(String name){
         if(name.length() >= 5 && name.length() <= 10){
@@ -43,7 +48,7 @@ public class UserService {
     }
     public boolean IsValidPasswd(String passwd){
         if(passwd.length() >= 5 && passwd.length() <= 12){
-            Pattern pt = Pattern.compile("[\\w]+");
+            Pattern pt = Pattern.compile("^\\w+$");
             Matcher mt = pt.matcher(passwd);
             if(mt.matches()){
                 return true;

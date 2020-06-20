@@ -1,4 +1,4 @@
-package com.thoughtworks.capacity.gtb.mvc;
+package com.thoughtworks.capacity.gtb.mvc.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ErrorResult {
 
+    private Integer code;
     private String message;
 }
