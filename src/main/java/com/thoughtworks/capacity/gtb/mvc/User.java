@@ -23,5 +23,4 @@ public class User {
     @NotBlank
     @Pattern(regexp = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$", message = "邮箱不合法")
     private String email;
-
 }
