@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +17,7 @@ public class User {
     @NotBlank
     private String passwd;
     @NotBlank
+    @Pattern(regexp = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$", message = "邮箱不合法")
     private String email;
 
 }
