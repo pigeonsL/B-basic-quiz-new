@@ -13,10 +13,10 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(UserErrorException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResult handle(UserNotFoundException e) {
+    public ErrorResult handle(UserErrorException e) {
         return new ErrorResult(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
