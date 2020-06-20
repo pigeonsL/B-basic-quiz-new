@@ -18,8 +18,6 @@ public class UserService {
     }
 
     public void addUser(User user) throws UserNotFoundException {
-        if(!IsValidName(user.getName()))
-            throw new UserNotFoundException("用户名不合法");
         if(!IsValidPasswd(user.getPasswd()))
             throw new UserNotFoundException("密码不合法");
         int count = userMap.size() + 1;
@@ -28,9 +26,6 @@ public class UserService {
     }
 
     public User login(String name, String passwd) throws UserNotFoundException {
-        if(!IsValidName(name)){
-            throw new UserNotFoundException("用户名不合法");
-        }
         if(IsValidPasswd(passwd)){
             for(User user: userMap.values()){
                 if(user.getName().equals(name) && user.getPasswd().equals(passwd)){
@@ -39,12 +34,6 @@ public class UserService {
             }
         }
         throw new UserNotFoundException("用户名或密码错误");
-    }
-    public boolean IsValidName(String name){
-        if(name.length() >= 5 && name.length() <= 10){
-            return true;
-        }
-        return false;
     }
     public boolean IsValidPasswd(String passwd){
         if(passwd.length() >= 5 && passwd.length() <= 12){

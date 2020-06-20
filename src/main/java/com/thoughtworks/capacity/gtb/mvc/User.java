@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +14,7 @@ import javax.validation.constraints.Pattern;
 public class User {
     private Integer id;
     @NotBlank
+    @Size(max = 12, min = 5, message = "用户名不合法")
     private String name;
     @NotBlank
     private String passwd;
