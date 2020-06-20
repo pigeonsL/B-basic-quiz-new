@@ -16,6 +16,10 @@ public class UserController {
     //GET 登录
     @GetMapping("/login")
     public User login( String name, String passwd) throws UserErrorException {
+        User user = userService.login(name, passwd);
+        if(user == null){
+            throw new UserErrorException("用户名或密码错误");
+        }
         return userService.login(name, passwd);
     }
 
