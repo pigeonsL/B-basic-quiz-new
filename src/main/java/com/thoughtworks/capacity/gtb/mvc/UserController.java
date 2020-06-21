@@ -1,32 +1,35 @@
 package com.thoughtworks.capacity.gtb.mvc;
 
-import com.thoughtworks.capacity.gtb.mvc.exception.UserErrorException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 @RestController
 public class UserController {
-    private final UserService userService;
+    @Autowired
+    UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable("id")long id){
+        User user = userService.find(id);
+        return user;
     }
-    //GET 登录
-    @GetMapping("/login")
-    public User login( String name, String passwd) throws UserErrorException {
-        User user = userService.login(name, passwd);
-        if(user == null){
-            throw new UserErrorException("用户名或密码错误");
-        }
-        return userService.login(name, passwd);
+    @GetMapping("/users/{id}/educations")
+    public Education getUserEducation(@PathVariable("id")long id){
+        Education education = userService.findUserEducation(id);
+        return education;
     }
 
-    //POST register
-    @PostMapping("/register")
+    @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerUser(@RequestBody @Valid User user) throws UserErrorException {
+    public void registerUser(@RequestBody User user){
         userService.addUser(user);
+    }
+
+    @PostMapping("/users/{id}/educations")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerUserEducation(@PathVariable("id")Integer id, @RequestBody Education edu){
+        userService.addUserEducation(id, edu);
     }
 }
